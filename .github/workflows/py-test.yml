@@ -3,7 +3,7 @@ name: Python package
 on: [push]
 
 jobs:
-  build:
+  run-pytest:
 
     runs-on: ubuntu-latest
 
@@ -30,4 +30,18 @@ jobs:
         run: |
           pip install pytest pytest-cov
           pytest test_ops.py
+
+
+      - name: Install the code linting and formatting tool Ruff
+        run: pipx install ruff
+        
+      - name: Lint code with Ruff
+        run: ruff check --output-format=github --target-version=py313
+        
+      - name: Check code formatting with Ruff
+        run: ruff format --diff --target-version=py39
+        continue-on-error: true
+
+
+          
 
